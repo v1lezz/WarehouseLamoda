@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16
+    user: postgres
+    container_name: database
+    restart: always
+    networks:
+      - warehouse_net
+    environment:
+      - POSTGRES_USER=v1lezz
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=warehouse
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - warehouse_data:/var/lib/postgresql/warehouse_data
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "9000:9000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - warehouse_net
+
+volumes:
+  warehouse_data:
+
+networks:
+  warehouse_net:
+    driver: bridge
