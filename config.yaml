@@ -1,0 +1,9 @@
+db:
+  user: "v1lezz"
+  password: "1234"
+  db_name: "warehouse"
+  host: "database"
+  port: 5432
+  migrations_path: "/warehouse/internal/adapters/repository/migrations"
+server:
+  port: 9000
