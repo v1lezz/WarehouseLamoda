@@ -1,4 +1,8 @@
 # For start
+make run
+
+OR
+
 docker-compose up -d
 
 # Requests and answers
